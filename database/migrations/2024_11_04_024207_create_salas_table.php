@@ -17,6 +17,6 @@ class CreateSalasTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('salas'); // Remove a tabela
+        Schema::dropIfExists('salas');
     }
 }

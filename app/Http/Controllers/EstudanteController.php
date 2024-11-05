@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estudantes;
+use App\Models\Salas;
 
 class EstudanteController extends Controller
 {
@@ -12,8 +13,9 @@ class EstudanteController extends Controller
      */
     public function index()
     {
+        $salas = Salas::all();
         $estudantes = Estudantes::all();
-        return view('index', compact('estudantes'));
+        return view('index', compact('estudantes', 'salas'));
     }
 
     /**
@@ -21,7 +23,8 @@ class EstudanteController extends Controller
      */
     public function create()
     {
-        return view('create', ['estudante' => new Estudantes()]);
+        $salas = Salas::all();
+        return view('EstudantesCreate', ['estudante' => new Estudantes(), 'salas' => $salas]);
     }
 
     /**
@@ -33,28 +36,28 @@ class EstudanteController extends Controller
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string',
             'nascimento' => 'required|date',
+            'sala_id' => 'required|exists:salas,id',
         ]);
     
-        // Verificar se o estudante já existe pelo CPF
         $estudante = Estudantes::where('cpf', $validated['cpf'])->first();
     
         if ($estudante) {
-            // Atualiza se já existir
+
             $estudante->update($validated);
             return redirect()->route('estudantes.index')->with('success', 'Estudante atualizado com sucesso!');
         } else {
-            // Cria se não existir
             Estudantes::create($validated);
             return redirect()->route('estudantes.index')->with('success', 'Estudante criado com sucesso!');
         }
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $estudante = Estudantes::find($id);
+        $estudante = Estudantes::with('sala')->find($id); 
         return view('estudante.show', compact('estudante'));
     }
 
@@ -63,14 +66,16 @@ class EstudanteController extends Controller
      */
     public function edit(string $id)
     {
+        $salas = Salas::all();
         $estudante = Estudantes::find($id);
-        
+    
         if (!$estudante) {
             return redirect()->route('estudantes.index')->with('error', 'Estudante não encontrado');
         }
-
-        return view('create', ['estudante' => $estudante]);
+    
+        return view('create', ['estudante' => $estudante, 'salas' => $salas]);
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -81,10 +86,11 @@ class EstudanteController extends Controller
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string',
             'nascimento' => 'required|date',
+            'sala_id' => 'required|exists:salas,id',
         ]);
-
+    
         $estudante = Estudantes::find($id);
-
+    
         if ($estudante) {
             $estudante->update($validated);
             return redirect()->route('estudantes.index')->with('success', 'Estudante atualizado com sucesso!');
@@ -92,6 +98,7 @@ class EstudanteController extends Controller
             return redirect()->route('estudantes.index')->with('error', 'Estudante não encontrado');
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.

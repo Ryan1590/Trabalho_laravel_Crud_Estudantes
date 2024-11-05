@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\EstudanteController;
+use App\Http\Controllers\SalaController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas para o recurso "estudantes"
@@ -21,3 +22,14 @@ Route::put('estudantes/{id}', [EstudanteController::class, 'update'])->name('est
 
 // Rota para excluir um estudante
 Route::delete('estudantes/{id}', [EstudanteController::class, 'destroy'])->name('estudantes.destroy');
+
+
+
+// Rota para Salas
+Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
+Route::get('/salas/create', [SalaController::class, 'create'])->name('salas.create');
+Route::get('salas/{id}/edit', [SalaController::class, 'edit'])->name('salas.edit');
+Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
+Route::get('salas/{id}', [SalaController::class, 'show'])->name('salas.show');
+Route::put('salas/{id}', [SalaController::class, 'update'])->name('salas.update');
+Route::delete('salas/{id}', [SalaController::class, 'destroy'])->name('salas.destroy');

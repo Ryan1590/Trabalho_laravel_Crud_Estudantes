@@ -12,22 +12,22 @@
   </head>
   <body>
 
-  
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-header">
-                Detalhes do estudante {{ $estudante->nome }}
-            </div>
-            <div class="card-body">
-                <p><Strong>ID:</Strong> {{ $estudante->id }} </p>
-                <p><Strong>Nome:</Strong> {{ $estudante->nome }} </p>
-                <p><strong>CPF:</strong> {{ preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $estudante->cpf) }} </p>
-                <p><Strong>Data Nascimento:</Strong> {{ $estudante->nascimento }} </p>
-                <br>
-                <a class="btn btn-success" href="{{ route('estudantes.index') }}">Voltar</a>
-            </div>
-        </div>
-    </div>
+  <div class="container mt-4">
+      <div class="card">
+          <div class="card-header">
+              Detalhes do estudante {{ $estudante->nome }}
+          </div>
+          <div class="card-body">
+              <p><Strong>ID:</Strong> {{ $estudante->id }} </p>
+              <p><Strong>Nome:</Strong> {{ $estudante->nome }} </p>
+              <p><strong>CPF:</strong> {{ preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $estudante->cpf) }} </p>
+              <p><Strong>Data Nascimento: </Strong>{{ \Carbon\Carbon::parse($estudante->nascimento)->format('d/m/Y') }} </p>
+              <p><Strong>Sala:</Strong> {{ $estudante->sala->nome ?? 'Sem sala atribuída' }} </p>  <!-- Exibe o nome da sala -->
+              <br>
+              <a class="btn btn-success" href="{{ route('estudantes.index') }}">Voltar</a>
+          </div>
+      </div>
+  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

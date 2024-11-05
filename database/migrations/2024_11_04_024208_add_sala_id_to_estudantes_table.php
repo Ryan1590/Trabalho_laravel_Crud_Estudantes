@@ -9,7 +9,7 @@ class AddSalaIdToEstudantesTable extends Migration
     public function up(): void
     {
         Schema::table('estudantes', function (Blueprint $table) {
-            $table->foreignId('sala_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('sala_id')->constrained()->onDelete('cascade');
         });
     }
 

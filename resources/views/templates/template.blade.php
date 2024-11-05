@@ -10,11 +10,20 @@
 </head>
 <body>
 
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Trabalho Laravel Melhor Professor Alex</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Estudantes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/salas">Salas</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</nav>
+    </nav>
 
 @yield('content')
 
